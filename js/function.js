@@ -1,11 +1,4 @@
-// Проверка на длинну строки
-// Меньше или равно: true
-// Больше: false
-
 const isStringLength = (string, length) => string.length <= length;
-
-
-// Проверка слов и предложений на палиндром
 
 const isPalindrome = (string) => {
   const line = string
@@ -15,8 +8,6 @@ const isPalindrome = (string) => {
   return line === line.split('').reverse().join('');
 };
 
-// Функция возврата числа
-
 const getNumber = (string) => {
   const result = string
     .toString()
@@ -24,8 +15,6 @@ const getNumber = (string) => {
 
   return parseInt(result, 10);
 };
-
-// Функция редактирования строки
 
 const getString = (string, length, addSimbol) => {
   const actualLenght = length - string.length;
@@ -35,4 +24,12 @@ const getString = (string, length, addSimbol) => {
   }
 
   return addSimbol.slice(0, actualLenght % addSimbol.length) + addSimbol.repeat(actualLenght / addSimbol.length) + string;
+};
+
+
+export default {
+  isStringLength,
+  isPalindrome,
+  getNumber,
+  getString
 };
