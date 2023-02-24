@@ -1,4 +1,4 @@
-const isStringLength = (string, length) => string.length <= length;
+const checkStringLength = (string, maxLength) => string.length <= maxLength;
 
 const isPalindrome = (string) => {
   const line = string
@@ -8,7 +8,7 @@ const isPalindrome = (string) => {
   return line === line.split('').reverse().join('');
 };
 
-const getNumber = (string) => {
+const parseNumber = (string) => {
   const result = string
     .toString()
     .replace(/[^\d]/gi, '');
@@ -16,20 +16,19 @@ const getNumber = (string) => {
   return parseInt(result, 10);
 };
 
-const getString = (string, length, addSimbol) => {
-  const actualLenght = length - string.length;
+const changeString = (string, length, addSymbols) => {
+  const actualLength = length - string.length;
 
-  if (actualLenght <= 0) {
+  if (actualLength <= 0) {
     return string;
   }
 
-  return addSimbol.slice(0, actualLenght % addSimbol.length) + addSimbol.repeat(actualLenght / addSimbol.length) + string;
+  return addSymbols.slice(0, actualLength % addSymbols.length) + addSymbols.repeat(actualLength / addSymbols.length) + string;
 };
 
-
-export default {
-  isStringLength,
+export {
+  checkStringLength,
   isPalindrome,
-  getNumber,
-  getString
+  parseNumber,
+  changeString
 };
