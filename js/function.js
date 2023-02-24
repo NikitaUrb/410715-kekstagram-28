@@ -1,5 +1,7 @@
 const checkStringLength = (string, maxLength) => string.length <= maxLength;
 
+checkStringLength('проверяемая строка', 10);
+
 const isPalindrome = (string) => {
   const line = string
     .toLowerCase()
@@ -8,6 +10,8 @@ const isPalindrome = (string) => {
   return line === line.split('').reverse().join('');
 };
 
+isPalindrome('Лёша на полке клопа нашёл ');
+
 const parseNumber = (string) => {
   const result = string
     .toString()
@@ -15,6 +19,8 @@ const parseNumber = (string) => {
 
   return parseInt(result, 10);
 };
+
+parseNumber('1 кефир, 0.5 батона');
 
 const changeString = (string, length, addSymbols) => {
   const actualLength = length - string.length;
@@ -26,9 +32,4 @@ const changeString = (string, length, addSymbols) => {
   return addSymbols.slice(0, actualLength % addSymbols.length) + addSymbols.repeat(actualLength / addSymbols.length) + string;
 };
 
-export {
-  checkStringLength,
-  isPalindrome,
-  parseNumber,
-  changeString
-};
+changeString('q', 4, 'we');
