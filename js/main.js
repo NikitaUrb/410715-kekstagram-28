@@ -75,3 +75,5 @@ const createUserPhoto = () => ({
 });
 
 const usersPhotos = Array.from({length: 25}, createUserPhoto);
+
+console.log(usersPhotos[2]);
