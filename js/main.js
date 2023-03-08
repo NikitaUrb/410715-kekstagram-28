@@ -1,3 +1,3 @@
-import { usersPhotos } from './utils.js';
+import { createUsersPhotosArray } from './data.js';
 
-usersPhotos();
+createUsersPhotosArray();
