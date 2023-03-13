@@ -1,3 +1,6 @@
-import { createUsersPhotosArray } from './data.js';
+import { renderPhotos } from './renderPhotos.js';
+import { createUsersPhotos } from './data.js';
 
-createUsersPhotosArray();
+const data = createUsersPhotos();
+
+renderPhotos(data);
