@@ -22,6 +22,6 @@ photosArray.forEach(({url, description, comments, likes}) => {
   comment.textContent = comments.length;
 
   picturesFragment.appendChild(photo);
-})
+});
 
 pictures.appendChild(picturesFragment);
