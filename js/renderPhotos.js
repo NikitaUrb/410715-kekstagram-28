@@ -1,12 +1,12 @@
-const renderPhoto = (item) => {
-  const photosArray = item;
-  const picturesFragment = document.createDocumentFragment();
+const pictures = document.querySelector('.pictures');
+const picturesFragment = document.createDocumentFragment();
 
-  const newPicture = document.querySelector('#picture')
-    .content
-    .querySelector('.picture');
+const newPicture = document.querySelector('#picture')
+  .content
+  .querySelector('.picture');
 
-  photosArray.forEach(({url, description, comments, likes}) => {
+const renderPhotos = (photos) => {
+  photos.forEach(({url, description, comments, likes}) => {
     const photo = newPicture.cloneNode(true);
     const image = photo.querySelector('.picture__img');
     const info = photo.querySelector('.picture__info');
@@ -22,7 +22,7 @@ const renderPhoto = (item) => {
     picturesFragment.appendChild(photo);
   });
 
-  return picturesFragment;
+  pictures.appendChild(picturesFragment);
 };
 
-export {renderPhoto};
+export {renderPhotos};

@@ -1,7 +1,6 @@
-import { renderPhoto } from './renderPhoto.js';
-import { createUsersPhotosArray } from './data.js';
+import { renderPhotos } from './renderPhotos.js';
+import { createUsersPhotos } from './data.js';
 
-const pictures = document.querySelector('.pictures');
+const data = createUsersPhotos();
 
-
-pictures.appendChild(renderPhoto(createUsersPhotosArray()));
+renderPhotos(data);
