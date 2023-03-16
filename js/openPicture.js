@@ -9,14 +9,14 @@ const commentCount = document.querySelector('.social__comment-count');
 const loader = document.querySelector('.comments-loader');
 
 const closeBigPicture = () => {
-  closeButton.addEventListener('click', () => {
-    bigPicture.classList.add('hidden');
-  });
-
   body.addEventListener('keydown', (evt) => {
-    if (evt.key === 27) {
+    if (evt.keyCode === 27) {
       bigPicture.classList.add('hidden');
     }
+  });
+
+  closeButton.addEventListener('click', () => {
+    bigPicture.classList.add('hidden');
   });
 };
 
