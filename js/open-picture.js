@@ -1,35 +1,37 @@
-import { renderBigPicture } from './renderBigPicture.js';
+import { renderBigPicture } from './render-big-picture.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = document.querySelector('.big-picture__cancel');
-
 const commentCount = document.querySelector('.social__comment-count');
 const loader = document.querySelector('.comments-loader');
 
-const close = (evt) => {
+const closeModal = () => {
+  document.body.classList.remove('modal-open');
+  bigPicture.classList.add('hidden');
+  document.body.removeEventListener('keydown', onDocumentKeyDown);
+};
+
+
+function onDocumentKeyDown (evt) {
   if (evt.key === 'Escape') {
-    document.body.classList.remove('modal-open');
-    bigPicture.classList.add('hidden');
-    document.body.removeEventListener('keydown', close);
+    closeModal();
   }
+}
+
+const oonCloseButtonClick = () => closeModal();
+
+const setInnerListeners = () => {
+  document.body.addEventListener('keydown', onDocumentKeyDown);
+
+  closeButton.addEventListener('click', oonCloseButtonClick);
 };
-
-const closeBigPicture = () => {
-  document.body.addEventListener('keydown', close);
-
-  closeButton.addEventListener('click', () => {
-    document.body.classList.remove('modal-open');
-    bigPicture.classList.add('hidden');
-  });
-};
-
 
 const openBigPicture = (url, description, comments, likes) => {
   document.body.classList.add('modal-open');
   bigPicture.classList.remove('hidden');
   commentCount.classList.add('hidden');
   loader.classList.add('hidden');
-  closeBigPicture();
+  setInnerListeners();
 
   renderBigPicture(url, description, comments, likes);
 };

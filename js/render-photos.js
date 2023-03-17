@@ -1,4 +1,4 @@
-import { openBigPicture } from './openPicture.js';
+import { openBigPicture } from './open-picture.js';
 
 const pictures = document.querySelector('.pictures');
 const picturesFragment = document.createDocumentFragment();
