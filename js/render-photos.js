@@ -1,3 +1,5 @@
+import { openBigPicture } from './open-picture.js';
+
 const pictures = document.querySelector('.pictures');
 const picturesFragment = document.createDocumentFragment();
 
@@ -18,6 +20,10 @@ const renderPhotos = (photos) => {
 
     like.textContent = likes;
     comment.textContent = comments.length;
+
+    photo.addEventListener('click', () => {
+      openBigPicture(url, description, comments, likes);
+    });
 
     picturesFragment.appendChild(photo);
   });
