@@ -21,7 +21,7 @@ const preparationComments = (min, max, comments) => {
 
     commentsList.appendChild(newComment);
   });
-}
+};
 
 const renderComments = (comments) => {
   commentsList.innerHTML = '';
