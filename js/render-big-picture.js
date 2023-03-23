@@ -14,7 +14,7 @@ const preparationComments = (min, max, comments) => {
     const userPhoto = newComment.querySelector('img');
     const userMessage = newComment.querySelector('.social__text');
 
-    commentCount.textContent = `${(max > comments.length) ? comments.length : max} из ${comments.length} комментариев`;
+    commentCount.textContent = `${Math.min(comments.length, max)} из ${comments.length} комментариев`;
     userPhoto.src = comment.avatar;
     userPhoto.alt = comment.name;
     userMessage.textContent = comment.message;
