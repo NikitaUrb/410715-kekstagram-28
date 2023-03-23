@@ -25,12 +25,13 @@ const preparateComments = (min, max, comments) => {
 
 const renderComments = (comments) => {
   commentsList.innerHTML = '';
+  const step = 5;
   let min = 0;
-  let max = 5;
+  let max = step;
 
   loaderButton.addEventListener('click', () => {
     min = max;
-    max = max + 5;
+    max = max + step;
 
     preparateComments(min, max, comments);
   });
