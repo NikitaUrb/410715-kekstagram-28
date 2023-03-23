@@ -7,7 +7,7 @@ const photoTitle = bigPicture.querySelector('.social__caption');
 const loaderButton = document.querySelector('.comments-loader');
 const commentCount = document.querySelector('.social__comment-count');
 
-const preparationComments = (min, max, comments) => {
+const preparateComments = (min, max, comments) => {
 
   comments.slice(min, max).forEach((comment) => {
     const newComment = commentTemplate.cloneNode(true);
@@ -32,10 +32,10 @@ const renderComments = (comments) => {
     min = max;
     max = max + 5;
 
-    preparationComments(min, max, comments);
+    preparateComments(min, max, comments);
   });
 
-  preparationComments(min, max, comments);
+  preparateComments(min, max, comments);
 };
 
 
