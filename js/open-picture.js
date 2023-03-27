@@ -1,4 +1,4 @@
-import { renderBigPicture } from './render-big-picture.js';
+import { renderBigPicture, clearLoaderListener } from './render-big-picture.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = document.querySelector('.big-picture__cancel');
@@ -8,6 +8,7 @@ const closeModal = () => {
   bigPicture.classList.add('hidden');
   document.body.removeEventListener('keydown', onDocumentKeyDown);
   closeButton.removeEventListener('click', onCloseButtonClick);
+  clearLoaderListener();
 };
 
 

@@ -7,6 +7,10 @@ const photoTitle = bigPicture.querySelector('.social__caption');
 const loaderButton = document.querySelector('.comments-loader');
 const commentCount = document.querySelector('.social__comment-count');
 
+
+const STEP = 5;
+let onLoaderButtonClick;
+
 const preparateComments = (min, max, comments) => {
 
   comments.slice(min, max).forEach((comment) => {
@@ -25,19 +29,24 @@ const preparateComments = (min, max, comments) => {
 
 const renderComments = (comments) => {
   commentsList.innerHTML = '';
-  const step = 5;
   let min = 0;
-  let max = step;
+  let max = STEP;
 
-  loaderButton.addEventListener('click', () => {
+  onLoaderButtonClick = () => {
     min = max;
-    max = max + step;
+    max = max + STEP;
 
     preparateComments(min, max, comments);
-  });
+  }
+
+  loaderButton.addEventListener('click', onLoaderButtonClick);
 
   preparateComments(min, max, comments);
 };
+
+const clearLoaderListener = () => {
+  loaderButton.removeEventListener('click', onLoaderButtonClick);
+}
 
 
 const renderBigPicture = (url, description, comments, likes) => {
@@ -49,4 +58,4 @@ const renderBigPicture = (url, description, comments, likes) => {
   renderComments(comments);
 };
 
-export {renderBigPicture};
+export {renderBigPicture, clearLoaderListener};
