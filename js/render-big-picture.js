@@ -37,7 +37,7 @@ const renderComments = (comments) => {
     max = max + STEP;
 
     preparateComments(min, max, comments);
-  }
+  };
 
   loaderButton.addEventListener('click', onLoaderButtonClick);
 
@@ -46,7 +46,7 @@ const renderComments = (comments) => {
 
 const clearLoaderListener = () => {
   loaderButton.removeEventListener('click', onLoaderButtonClick);
-}
+};
 
 
 const renderBigPicture = (url, description, comments, likes) => {
