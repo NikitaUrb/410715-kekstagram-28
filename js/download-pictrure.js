@@ -1,5 +1,6 @@
 const downloadInput = document.querySelector('#upload-file');
 const formEdit = document.querySelector('.img-upload__overlay');
+const preview = document.querySelectorAll('.effects__preview');
 
 downloadInput.addEventListener('change', () => {
   const reader = new FileReader();
@@ -11,10 +12,11 @@ downloadInput.addEventListener('change', () => {
 
     reader.addEventListener('load', () => {
       const url = reader.result;
-      formEdit.classList.remove('hidden');
-      document.body.classList.add('.modal-open');
       const img = document.querySelector('.img-upload__preview img');
       img.src = url;
+      preview.forEach((item) => {
+        item.style.backgroundImage = `url("${url}")`;
+      });
     });
   }
 });
