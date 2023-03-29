@@ -3,6 +3,7 @@ const formEdit = document.querySelector('.img-upload__overlay');
 const previewImage = document.querySelectorAll('.effects__preview');
 const form = document.querySelector('#upload-select-image');
 const buttonClose = document.querySelector('.img-upload__cancel');
+const buttonSubmit = document.querySelector('.img-upload__submit');
 const hashtag = document.querySelector('.text__hashtags');
 const comment = document.querySelector('.text__description');
 
@@ -64,14 +65,29 @@ function setInnerListeners() {
   buttonClose.addEventListener('click', onCloseButtonClick);
 
 }
+const blockSubmit = (evt) => evt.preventDefault();
 
 
 const hashtagValidate = (string) => {
   const pattern = /^#[a-zа-яё0-9]{1,19}$/i;
-  return pattern.test(string);
+  if(!pattern.test(string)) {
+    form.addEventListener('submit', blockSubmit);
+    return false;
+  } else {
+    form.removeEventListener('submit', blockSubmit);
+    return true;
+  }
 };
 
-const commentLength = (string) => string.length <= 140;
+const commentLength = (string) => {
+  if (string.length <= 140) {
+    form.removeEventListener('submit', blockSubmit);
+    return true;
+  } else {
+    form.addEventListener('submit', blockSubmit);
+    return false;
+  }
+};
 
 pristine.addValidator(hashtag, hashtagValidate, 'Ошибка в хэш-теге');
 pristine.addValidator(comment, commentLength, 'Комментарий слишком длинный');
