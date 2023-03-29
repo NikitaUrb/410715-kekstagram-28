@@ -63,7 +63,17 @@ function setInnerListeners() {
   document.body.addEventListener('keydown', onDocumentKeyDown);
   buttonClose.addEventListener('click', onCloseButtonClick);
 
+}
+
+
+const hashtagValidate = (string) => {
+  const pattern = /^#[a-zа-яё0-9]{1,19}$/i;
+  return pattern.test(string);
 };
 
+const commentLength = (string) => string.length <= 140;
+
+pristine.addValidator(hashtag, hashtagValidate, 'Ошибка в хэш-теге');
+pristine.addValidator(comment, commentLength, 'Комментарий слишком длинный');
 
 export {downloadInput};
