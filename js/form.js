@@ -3,7 +3,6 @@ const formEdit = document.querySelector('.img-upload__overlay');
 const previewImage = document.querySelectorAll('.effects__preview');
 const form = document.querySelector('#upload-select-image');
 const buttonClose = document.querySelector('.img-upload__cancel');
-const buttonSubmit = document.querySelector('.img-upload__submit');
 const hashtag = document.querySelector('.text__hashtags');
 const comment = document.querySelector('.text__description');
 
