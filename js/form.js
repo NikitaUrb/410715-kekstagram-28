@@ -10,6 +10,7 @@ const img = document.querySelector('.img-upload__preview img');
 
 const PATTERN = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_LENGTH_HASHTAGS = 5;
+const MAX_LENGTH_COMMENT = 140;
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -73,7 +74,7 @@ const validateHashtag = (string) => {
   return hashtags.every(isValidateHashtag) && isHashtagsLength(hashtags) && isUniqHashtags(hashtags);
 };
 
-const validateCommentLength = (string) => string.length <= 140;
+const validateCommentLength = (string) => string.length <= MAX_LENGTH_COMMENT;
 
 pristine.addValidator(hashtag, validateHashtag, 'Ошибка в хэш-теге');
 pristine.addValidator(comment, validateCommentLength, 'Комментарий слишком длинный');
