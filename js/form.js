@@ -1,10 +1,15 @@
-const downloadInput = document.querySelector('#upload-file');
+const uploadInput = document.querySelector('#upload-file');
 const formEdit = document.querySelector('.img-upload__overlay');
 const previewImage = document.querySelectorAll('.effects__preview');
 const form = document.querySelector('#upload-select-image');
 const buttonClose = document.querySelector('.img-upload__cancel');
 const hashtag = document.querySelector('.text__hashtags');
 const comment = document.querySelector('.text__description');
+const img = document.querySelector('.img-upload__preview img');
+
+
+const PATTERN = /^#[a-zа-яё0-9]{1,19}$/i;
+const MAX_LENGTH_HASHTAGS = 5;
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -12,23 +17,19 @@ const pristine = new Pristine(form, {
   errorTextClass: 'img-upload__field-wrapper--error'
 });
 
-const editImage = () => {
+const onUploadInputChange = () => {
   const reader = new FileReader();
-  reader.readAsDataURL(downloadInput.files[0]);
+  reader.readAsDataURL(uploadInput.files[0]);
   setInnerListeners();
 
-  if (downloadInput.value.length > 0) {
-    formEdit.classList.remove('hidden');
-    document.body.classList.add('.modal-open');
-
+  if (uploadInput.value.length > 0) {
     reader.addEventListener('load', () => {
       const url = reader.result;
-      const img = document.querySelector('.img-upload__preview img');
+
+      img.src = url;
 
       formEdit.classList.remove('hidden');
       document.body.classList.add('.modal-open');
-
-      img.src = url;
 
       previewImage.forEach((image) => {
         image.style.backgroundImage = `url('${url}')`;
@@ -37,11 +38,9 @@ const editImage = () => {
   }
 };
 
-downloadInput.addEventListener('change', editImage);
+const isFieldFocused = () => document.activeElement === hashtag || document.activeElement === comment;
 
-const isFocusInput = () => document.activeElement === hashtag || document.activeElement === comment;
-
-const closeEditImage = () => {
+const closeModal = () => {
   formEdit.classList.add('hidden');
   document.body.classList.remove('.modal-open');
   document.body.removeEventListener('keydown', onDocumentKeyDown);
@@ -50,13 +49,13 @@ const closeEditImage = () => {
 };
 
 function onDocumentKeyDown (evt) {
-  if (evt.key === 'Escape' && !isFocusInput()) {
-    closeEditImage();
+  if (evt.key === 'Escape' && !isFieldFocused()) {
+    closeModal();
   }
 }
 
 function onCloseButtonClick() {
-  closeEditImage();
+  closeModal();
 }
 
 function setInnerListeners() {
@@ -64,31 +63,31 @@ function setInnerListeners() {
   buttonClose.addEventListener('click', onCloseButtonClick);
 
 }
-const blockSubmit = (evt) => evt.preventDefault();
 
+const isHashtagsLength = (hashtags) => hashtags.length <= MAX_LENGTH_HASHTAGS;
+const isValidateHashtag = (item) => PATTERN.test(item);
+const isUniqHashtags = (hashtags) => hashtags.length === new Set(hashtags).size;
 
-const hashtagValidate = (string) => {
-  const pattern = /^#[a-zа-яё0-9]{1,19}$/i;
-  if(!pattern.test(string)) {
-    form.addEventListener('submit', blockSubmit);
-    return false;
+const validateHashtag = (string) => {
+  const hashtags = string.trim().toLowerCase().split(' ');
+  return hashtags.every(isValidateHashtag) && isHashtagsLength(hashtags) && isUniqHashtags(hashtags);
+};
+
+const validateCommentLength = (string) => string.length <= 140;
+
+pristine.addValidator(hashtag, validateHashtag, 'Ошибка в хэш-теге');
+pristine.addValidator(comment, validateCommentLength, 'Комментарий слишком длинный');
+
+const onFormSubmit = (evt) => {
+  const isValid = pristine.validate();
+  if(isValid){
+    form.submit();
   } else {
-    form.removeEventListener('submit', blockSubmit);
-    return true;
+    evt.preventDefault();
   }
 };
 
-const commentLength = (string) => {
-  if (string.length <= 140) {
-    form.removeEventListener('submit', blockSubmit);
-    return true;
-  } else {
-    form.addEventListener('submit', blockSubmit);
-    return false;
-  }
+export const setupForm = () => {
+  uploadInput.addEventListener('change', onUploadInputChange);
+  form.addEventListener('submit', onFormSubmit);
 };
-
-pristine.addValidator(hashtag, hashtagValidate, 'Ошибка в хэш-теге');
-pristine.addValidator(comment, commentLength, 'Комментарий слишком длинный');
-
-export {downloadInput};
