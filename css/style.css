@@ -1408,3 +1408,13 @@ main {
 .hidden {
   display: none;
 }
+
+/*Стили для ошибок валидацити*/
+
+.img-upload__field-error {
+  font-weight: bold;
+  color: rgba(255, 0, 0);
+  margin-top: -10px;
+  padding-bottom: 10px;
+  font-size: 17px
+}

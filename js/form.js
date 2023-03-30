@@ -15,7 +15,7 @@ const MAX_LENGTH_COMMENT = 140;
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent:'img-upload__field-wrapper',
-  errorTextClass: 'img-upload__field-wrapper--error'
+  errorTextClass: 'img-upload__field-error'
 });
 
 const onUploadInputChange = () => {
@@ -76,7 +76,7 @@ const validateHashtag = (string) => {
 
 const validateCommentLength = (string) => string.length <= MAX_LENGTH_COMMENT;
 
-pristine.addValidator(hashtag, validateHashtag, 'Ошибка в хэш-теге');
+pristine.addValidator(hashtag, validateHashtag, 'Слишком много хэш-тегов');
 pristine.addValidator(comment, validateCommentLength, 'Комментарий слишком длинный');
 
 const onFormSubmit = (evt) => {
