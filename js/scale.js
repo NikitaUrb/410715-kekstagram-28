@@ -41,8 +41,9 @@ const initScalingImg = () => {
 };
 
 const resetScaling = () => {
-  valueScale.value = `${SCALE_DEFAULT}%`;
-  img.style.transform = `scale(${Number.parseInt(valueScale.value, 10) / 100})`;
+  const newValue = SCALE_DEFAULT;
+
+  setScale(newValue);
 };
 
 export {initScalingImg, resetScaling};
