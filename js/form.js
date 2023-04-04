@@ -1,3 +1,5 @@
+import {resetEffects} from './effect.js';
+
 const uploadInput = document.querySelector('#upload-file');
 const formEdit = document.querySelector('.img-upload__overlay');
 const previewImage = document.querySelectorAll('.effects__preview');
@@ -47,6 +49,7 @@ const closeModal = () => {
   document.body.removeEventListener('keydown', onDocumentKeyDown);
   buttonClose.removeEventListener('click', onCloseButtonClick);
   pristine.reset();
+  resetEffects();
 };
 
 function onDocumentKeyDown (evt) {
