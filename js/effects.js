@@ -6,12 +6,13 @@ const sliderContainer = document.querySelector('.effect-level__slider');
 const uploadPreviewImg = document.querySelector('.img-upload__preview img');
 const effects = document.querySelector('.effects');
 
-slider.classList.add('hidden');
-
 const DEFAULT = EFFECTS[0];
 let chosenEffect = DEFAULT;
 
-const checkingDefault = () => chosenEffect === DEFAULT;
+const checkDefault = () => chosenEffect === DEFAULT;
+
+const hideSlider = () => slider.classList.add('hidden');
+const showSlider = () => slider.classList.remove('hidden');
 
 noUiSlider.create(sliderContainer, {
   range: {
@@ -21,10 +22,6 @@ noUiSlider.create(sliderContainer, {
   start: DEFAULT.max,
   step: DEFAULT.step,
   connect: 'lower'
-});
-
-sliderContainer.noUiSlider.on('update', () => {
-  sliderValue.value = sliderContainer.noUiSlider.get();
 });
 
 const onUpdateSlider = () => {
@@ -37,19 +34,20 @@ const onUpdateSlider = () => {
     start: chosenEffect.max,
   });
 
-  if(checkingDefault()) {
-    slider.classList.add('hidden');
+  if(checkDefault()) {
+    hideSlider();
   } else {
-    slider.classList.remove('hidden');
+    showSlider();
   }
 };
 
 const onChangeValueEffect = () => {
   const value = sliderContainer.noUiSlider.get();
-  uploadPreviewImg.style.filter = checkingDefault() ?
-    DEFAULT.style :
-    `${chosenEffect.style}(${value}${chosenEffect.unit})`;
   sliderValue.value = value;
+
+  uploadPreviewImg.style.filter = checkDefault()
+    ? DEFAULT.style
+    : `${chosenEffect.style}(${value}${chosenEffect.unit})`;
 };
 
 const onChangeEffect = (evt) => {
@@ -58,12 +56,18 @@ const onChangeEffect = (evt) => {
   onUpdateSlider();
 };
 
-effects.addEventListener('change', onChangeEffect);
-sliderContainer.noUiSlider.on('update', onChangeValueEffect);
-
 const resetEffects = () => {
   chosenEffect = DEFAULT;
   onUpdateSlider();
 };
 
-export {resetEffects};
+const initSlider = () => {
+  effects.addEventListener('change', onChangeEffect);
+  sliderContainer.noUiSlider.on('update', onChangeValueEffect);
+
+  sliderContainer.noUiSlider.on('update', () => {
+    sliderValue.value = sliderContainer.noUiSlider.get();
+  });
+};
+
+export {resetEffects, initSlider};
