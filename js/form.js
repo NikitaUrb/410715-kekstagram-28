@@ -1,4 +1,5 @@
-export {resetEffects} from './effects.js';
+import { resetEffects } from './effects.js';
+import { onDecreaseImg, onZoomImg } from './scale.js';
 
 const uploadInput = document.querySelector('#upload-file');
 const formEdit = document.querySelector('.img-upload__overlay');
@@ -8,11 +9,12 @@ const buttonClose = document.querySelector('.img-upload__cancel');
 const hashtag = document.querySelector('.text__hashtags');
 const comment = document.querySelector('.text__description');
 const img = document.querySelector('.img-upload__preview img');
-
+const scaleValue = document.querySelector('.scale__control--value');
 
 const PATTERN = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_LENGTH_HASHTAGS = 5;
 const MAX_LENGTH_COMMENT = 140;
+const SCALE_DEFAULT = 100;
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -33,6 +35,11 @@ const onUploadInputChange = () => {
 
       formEdit.classList.remove('hidden');
       document.body.classList.add('.modal-open');
+
+      onDecreaseImg();
+      onZoomImg();
+
+      scaleValue.value = SCALE_DEFAULT;
 
       previewImage.forEach((image) => {
         image.style.backgroundImage = `url('${url}')`;
