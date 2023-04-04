@@ -16,6 +16,9 @@ const MAX_LENGTH_HASHTAGS = 5;
 const MAX_LENGTH_COMMENT = 140;
 const SCALE_DEFAULT = 100;
 
+onDecreaseImg();
+onZoomImg();
+
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent:'img-upload__field-wrapper',
@@ -35,9 +38,6 @@ const onUploadInputChange = () => {
 
       formEdit.classList.remove('hidden');
       document.body.classList.add('.modal-open');
-
-      onDecreaseImg();
-      onZoomImg();
 
       scaleValue.value = SCALE_DEFAULT;
 
