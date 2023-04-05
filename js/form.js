@@ -1,3 +1,6 @@
+import { resetEffects } from './effects.js';
+import { resetScaling } from './scale.js';
+
 const uploadInput = document.querySelector('#upload-file');
 const formEdit = document.querySelector('.img-upload__overlay');
 const previewImage = document.querySelectorAll('.effects__preview');
@@ -6,7 +9,6 @@ const buttonClose = document.querySelector('.img-upload__cancel');
 const hashtag = document.querySelector('.text__hashtags');
 const comment = document.querySelector('.text__description');
 const img = document.querySelector('.img-upload__preview img');
-
 
 const PATTERN = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_LENGTH_HASHTAGS = 5;
@@ -25,6 +27,7 @@ const onUploadInputChange = () => {
 
   if (uploadInput.value.length > 0) {
     reader.addEventListener('load', () => {
+      resetScaling();
       const url = reader.result;
 
       img.src = url;
@@ -47,6 +50,7 @@ const closeModal = () => {
   document.body.removeEventListener('keydown', onDocumentKeyDown);
   buttonClose.removeEventListener('click', onCloseButtonClick);
   pristine.reset();
+  resetEffects();
 };
 
 function onDocumentKeyDown (evt) {
