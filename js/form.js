@@ -1,3 +1,4 @@
+import { sendForm } from './api.js';
 import { resetEffects } from './effects.js';
 import { resetScaling } from './scale.js';
 
@@ -86,7 +87,9 @@ pristine.addValidator(comment, validateCommentLength, 'Комментарий с
 const onFormSubmit = (evt) => {
   const isValid = pristine.validate();
   if(isValid){
-    form.submit();
+    evt.preventDefault();
+    const formData = new FormData(evt.target);
+    sendForm(formData);
   } else {
     evt.preventDefault();
   }
