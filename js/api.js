@@ -16,7 +16,8 @@ const sendForm = (item) => {
         'Content-Type': 'multipart/form-data',
       },
       body: JSON.stringify(item)
-    });
+    })
+    .then((response) => response.json());
 } ;
 
 export {DATA, sendForm};
