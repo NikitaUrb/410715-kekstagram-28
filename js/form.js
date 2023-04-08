@@ -1,6 +1,7 @@
-import { sendForm } from './api.js';
+import { sendData } from './api.js';
 import { resetEffects } from './effects.js';
 import { resetScaling } from './scale.js';
+import { showAlert } from './util.js';
 
 const uploadInput = document.querySelector('#upload-file');
 const formEdit = document.querySelector('.img-upload__overlay');
@@ -84,12 +85,14 @@ const validateCommentLength = (string) => string.length <= MAX_LENGTH_COMMENT;
 pristine.addValidator(hashtag, validateHashtag, 'Слишком много хэш-тегов');
 pristine.addValidator(comment, validateCommentLength, 'Комментарий слишком длинный');
 
+
 const onFormSubmit = (evt) => {
   const isValid = pristine.validate();
   if(isValid){
     evt.preventDefault();
-    const formData = new FormData(evt.target);
-    sendForm(formData);
+    sendData(new FormData(evt.target))
+      .then(closeModal())
+      .catch((err) => showAlert(err.message));
   } else {
     evt.preventDefault();
   }
