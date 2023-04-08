@@ -1,7 +1,7 @@
 import { sendData } from './api.js';
 import { resetEffects } from './effects.js';
 import { resetScaling } from './scale.js';
-import { showAlert } from './util.js';
+import { showErrorAlert, showSuccessMessage } from './util.js';
 
 const uploadInput = document.querySelector('#upload-file');
 const formEdit = document.querySelector('.img-upload__overlay');
@@ -51,6 +51,8 @@ const closeModal = () => {
   document.body.classList.remove('.modal-open');
   document.body.removeEventListener('keydown', onDocumentKeyDown);
   buttonClose.removeEventListener('click', onCloseButtonClick);
+  hashtag.value = '';
+  comment.value = '';
   pristine.reset();
   resetEffects();
 };
@@ -92,7 +94,8 @@ const onFormSubmit = (evt) => {
     evt.preventDefault();
     sendData(new FormData(evt.target))
       .then(closeModal())
-      .catch((err) => showAlert(err.message));
+      .then(showSuccessMessage())
+      .catch(() => showErrorAlert());
   } else {
     evt.preventDefault();
   }

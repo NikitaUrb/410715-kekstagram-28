@@ -1,18 +1,16 @@
 const ALERT_SHOW_TIME = 5000;
 
-const showAlert = (message) => {
-  const alertContainer = document.createElement('div');
-  alertContainer.style.zIndex = '100';
-  alertContainer.style.position = 'absolute';
-  alertContainer.style.left = '0';
-  alertContainer.style.top = '0';
-  alertContainer.style.right = '0';
-  alertContainer.style.padding = '10px 3px';
-  alertContainer.style.fontSize = '30px';
-  alertContainer.style.textAlign = 'center';
-  alertContainer.style.backgroundColor = 'red';
+const errorMessage = document.querySelector('#error');
+const successMessage = document.querySelector('#success');
 
-  alertContainer.textContent = message;
+const showLoadError = (message) => {
+  const alertContainer = errorMessage.content;
+  const messageText = alertContainer.querySelector('.error__title');
+  const button = alertContainer.querySelector('button');
+
+  button.addEventListener('click', () => location.reload());
+
+  messageText.textContent = message;
 
   document.body.append(alertContainer);
 
@@ -21,4 +19,35 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export {showAlert};
+
+const showErrorAlert = () => {
+  const alertContainer = errorMessage.content;
+  const button = alertContainer.querySelector('button');
+
+  document.body.append(alertContainer);
+
+  button.addEventListener('click', () => {
+    document.querySelector('.error').remove();
+  });
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
+};
+
+const showSuccessMessage = () => {
+  const alertContainer = successMessage.content;
+  const button = alertContainer.querySelector('button');
+
+  button.addEventListener('click', () => {
+    document.querySelector('.success').remove();
+  });
+
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
+};
+
+export {showErrorAlert, showSuccessMessage, showLoadError};
