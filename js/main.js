@@ -3,7 +3,7 @@ import { setupForm } from './form.js';
 import { initSlider } from './effects.js';
 import { initScalingImg } from './scale.js';
 import { getData } from './api.js';
-import { showLoadError } from './util.js';
+import { showLoadError } from './popups.js';
 
 getData()
   .then((data) => {

@@ -1,10 +1,10 @@
 import { sendData } from './api.js';
 import { resetEffects } from './effects.js';
 import { resetScaling } from './scale.js';
-import { showErrorAlert, showSuccessMessage } from './util.js';
+import { showErrorAlert, showSuccessMessage } from './popups.js';
 
 const uploadInput = document.querySelector('#upload-file');
-const formEdit = document.querySelector('.img-upload__overlay');
+const formOverlay = document.querySelector('.img-upload__overlay');
 const previewImage = document.querySelectorAll('.effects__preview');
 const form = document.querySelector('#upload-select-image');
 const buttonClose = document.querySelector('.img-upload__cancel');
@@ -29,12 +29,11 @@ const onUploadInputChange = () => {
 
   if (uploadInput.value.length > 0) {
     reader.addEventListener('load', () => {
-      resetScaling();
       const url = reader.result;
 
       img.src = url;
 
-      formEdit.classList.remove('hidden');
+      formOverlay.classList.remove('hidden');
       document.body.classList.add('.modal-open');
 
       previewImage.forEach((image) => {
@@ -47,14 +46,14 @@ const onUploadInputChange = () => {
 const isFieldFocused = () => document.activeElement === hashtag || document.activeElement === comment;
 
 const closeModal = () => {
-  formEdit.classList.add('hidden');
+  formOverlay.classList.add('hidden');
   document.body.classList.remove('.modal-open');
   document.body.removeEventListener('keydown', onDocumentKeyDown);
   buttonClose.removeEventListener('click', onCloseButtonClick);
-  hashtag.value = '';
-  comment.value = '';
+  form.reset();
   pristine.reset();
   resetEffects();
+  resetScaling();
 };
 
 function onDocumentKeyDown (evt) {
@@ -79,7 +78,12 @@ const isUniqHashtags = (hashtags) => hashtags.length === new Set(hashtags).size;
 
 const validateHashtag = (string) => {
   const hashtags = string.trim().toLowerCase().split(' ');
-  return hashtags.every(isValidateHashtag) && isHashtagsLength(hashtags) && isUniqHashtags(hashtags);
+
+  if (hashtag.length > 0) {
+    return hashtags.every(isValidateHashtag) && isHashtagsLength(hashtags) && isUniqHashtags(hashtags);
+  }
+
+  return isHashtagsLength(hashtags) && isUniqHashtags(hashtags);
 };
 
 const validateCommentLength = (string) => string.length <= MAX_LENGTH_COMMENT;
@@ -90,14 +94,14 @@ pristine.addValidator(comment, validateCommentLength, 'Комментарий с
 
 const onFormSubmit = (evt) => {
   const isValid = pristine.validate();
+  evt.preventDefault();
   if(isValid){
-    evt.preventDefault();
     sendData(new FormData(evt.target))
-      .then(closeModal())
-      .then(showSuccessMessage())
-      .catch(() => showErrorAlert());
-  } else {
-    evt.preventDefault();
+      .then(() => {
+        closeModal();
+        showSuccessMessage();
+      })
+      .catch(showErrorAlert);
   }
 };
 

@@ -1,12 +1,15 @@
 const DEFAULT_URL = 'https://28.javascript.pages.academy/kekstagram';
+
 const ROUTE = {
   GET_DATA: '/data',
   SEND_DATA: '/',
 };
+
 const METHOD = {
   GET: 'GET',
   POPST: 'POST'
 };
+
 const ERROR_TEXT = {
   GET_DATA: 'Не удалось загрузить данные. Попробуйте обновить страницу',
   SEND_DATA: 'Не удалось отправить форму. Попробуйте ещё раз',
