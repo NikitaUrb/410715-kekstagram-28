@@ -1,12 +1,16 @@
 import { renderPhotos } from './render-photos.js';
-import { createUsersPhotos } from './data.js';
 import { setupForm } from './form.js';
 import { initSlider } from './effects.js';
 import { initScalingImg } from './scale.js';
+import { getData } from './api.js';
+import { showLoadError } from './popups.js';
 
-const data = createUsersPhotos();
+getData()
+  .then((data) => {
+    renderPhotos(data);
+  })
+  .catch((err) => showLoadError(err));
 
-renderPhotos(data);
 
 setupForm();
 initSlider();
