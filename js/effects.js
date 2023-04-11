@@ -49,13 +49,14 @@ const EFFECTS = [
   },
 ];
 
+const DEFAULT = EFFECTS[0];
+
 const slider = document.querySelector('.effect-level');
 const sliderValue = document.querySelector('.effect-level__value');
 const sliderContainer = document.querySelector('.effect-level__slider');
 const uploadPreviewImg = document.querySelector('.img-upload__preview img');
 const effects = document.querySelector('.effects');
 
-const DEFAULT = EFFECTS[0];
 let chosenEffect = DEFAULT;
 
 const checkDefault = () => chosenEffect === DEFAULT;

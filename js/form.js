@@ -3,6 +3,10 @@ import { resetEffects } from './effects.js';
 import { resetScaling } from './scale.js';
 import { showErrorAlert, showSuccessMessage } from './popups.js';
 
+const PATTERN = /^#[a-zа-яё0-9]{1,19}$/i;
+const MAX_LENGTH_HASHTAGS = 5;
+const MAX_LENGTH_COMMENT = 140;
+
 const uploadInput = document.querySelector('#upload-file');
 const formOverlay = document.querySelector('.img-upload__overlay');
 const previewImage = document.querySelectorAll('.effects__preview');
@@ -11,10 +15,6 @@ const buttonClose = document.querySelector('.img-upload__cancel');
 const hashtag = document.querySelector('.text__hashtags');
 const comment = document.querySelector('.text__description');
 const img = document.querySelector('.img-upload__preview img');
-
-const PATTERN = /^#[a-zа-яё0-9]{1,19}$/i;
-const MAX_LENGTH_HASHTAGS = 5;
-const MAX_LENGTH_COMMENT = 140;
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
