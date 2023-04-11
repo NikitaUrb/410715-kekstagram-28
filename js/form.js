@@ -102,7 +102,7 @@ const onFormSubmit = (evt) => {
 };
 
 export const setupForm = () => {
-  pristine.addValidator(hashtag, validateHashtag, 'Ошибка заполнения хэштегов, хэштег должен начинаться с решщетки, макс длина 20, не более 5 хэштегов');
+  pristine.addValidator(hashtag, validateHashtag, 'Ошибка заполнения хэштегов, хэштег должен начинаться с решетки, макс длина 20, не более 5 хэштегов');
   pristine.addValidator(comment, validateCommentLength, 'Комментарий слишком длинный');
 
   uploadInput.addEventListener('change', onUploadInputChange);
