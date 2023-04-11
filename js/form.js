@@ -34,7 +34,7 @@ const onUploadInputChange = () => {
       img.src = url;
 
       formOverlay.classList.remove('hidden');
-      document.body.classList.add('.modal-open');
+      document.body.classList.add('modal-open');
 
       previewImage.forEach((image) => {
         image.style.backgroundImage = `url('${url}')`;
@@ -88,10 +88,6 @@ const validateHashtag = (string) => {
 
 const validateCommentLength = (string) => string.length <= MAX_LENGTH_COMMENT;
 
-pristine.addValidator(hashtag, validateHashtag, 'Слишком много хэш-тегов');
-pristine.addValidator(comment, validateCommentLength, 'Комментарий слишком длинный');
-
-
 const onFormSubmit = (evt) => {
   const isValid = pristine.validate();
   evt.preventDefault();
@@ -106,6 +102,9 @@ const onFormSubmit = (evt) => {
 };
 
 export const setupForm = () => {
+  pristine.addValidator(hashtag, validateHashtag, 'Ошибка заполнения хэштегов, хэштег должен начинаться с решщетки, макс длина 20, не более 5 хэштегов');
+  pristine.addValidator(comment, validateCommentLength, 'Комментарий слишком длинный');
+
   uploadInput.addEventListener('change', onUploadInputChange);
   form.addEventListener('submit', onFormSubmit);
 };
