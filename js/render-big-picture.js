@@ -1,3 +1,5 @@
+const STEP = 5;
+
 const commentTemplate = document.querySelector('.social__comment');
 const commentsList = document.querySelector('.social__comments');
 const bigPicture = document.querySelector('.big-picture');
@@ -7,8 +9,6 @@ const photoTitle = bigPicture.querySelector('.social__caption');
 const loaderButton = document.querySelector('.comments-loader');
 const commentCount = document.querySelector('.social__comment-count');
 
-
-const STEP = 5;
 let onLoaderButtonClick;
 
 const preparateComments = (min, max, comments) => {

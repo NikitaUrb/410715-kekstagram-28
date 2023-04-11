@@ -3,6 +3,10 @@ import { resetEffects } from './effects.js';
 import { resetScaling } from './scale.js';
 import { showErrorAlert, showSuccessMessage } from './popups.js';
 
+const PATTERN = /^#[a-zа-яё0-9]{1,19}$/i;
+const MAX_LENGTH_HASHTAGS = 5;
+const MAX_LENGTH_COMMENT = 140;
+
 const uploadInput = document.querySelector('#upload-file');
 const formOverlay = document.querySelector('.img-upload__overlay');
 const previewImage = document.querySelectorAll('.effects__preview');
@@ -11,10 +15,6 @@ const buttonClose = document.querySelector('.img-upload__cancel');
 const hashtag = document.querySelector('.text__hashtags');
 const comment = document.querySelector('.text__description');
 const img = document.querySelector('.img-upload__preview img');
-
-const PATTERN = /^#[a-zа-яё0-9]{1,19}$/i;
-const MAX_LENGTH_HASHTAGS = 5;
-const MAX_LENGTH_COMMENT = 140;
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -34,7 +34,7 @@ const onUploadInputChange = () => {
       img.src = url;
 
       formOverlay.classList.remove('hidden');
-      document.body.classList.add('.modal-open');
+      document.body.classList.add('modal-open');
 
       previewImage.forEach((image) => {
         image.style.backgroundImage = `url('${url}')`;
@@ -79,7 +79,7 @@ const isUniqHashtags = (hashtags) => hashtags.length === new Set(hashtags).size;
 const validateHashtag = (string) => {
   const hashtags = string.trim().toLowerCase().split(' ');
 
-  if (hashtag.length > 0) {
+  if (hashtag.value.length > 0) {
     return hashtags.every(isValidateHashtag) && isHashtagsLength(hashtags) && isUniqHashtags(hashtags);
   }
 
@@ -87,10 +87,6 @@ const validateHashtag = (string) => {
 };
 
 const validateCommentLength = (string) => string.length <= MAX_LENGTH_COMMENT;
-
-pristine.addValidator(hashtag, validateHashtag, 'Слишком много хэш-тегов');
-pristine.addValidator(comment, validateCommentLength, 'Комментарий слишком длинный');
-
 
 const onFormSubmit = (evt) => {
   const isValid = pristine.validate();
@@ -106,6 +102,9 @@ const onFormSubmit = (evt) => {
 };
 
 export const setupForm = () => {
+  pristine.addValidator(hashtag, validateHashtag, 'Ошибка заполнения хэштегов, хэштег должен начинаться с решетки, макс длина 20, не более 5 хэштегов');
+  pristine.addValidator(comment, validateCommentLength, 'Комментарий слишком длинный');
+
   uploadInput.addEventListener('change', onUploadInputChange);
   form.addEventListener('submit', onFormSubmit);
 };
