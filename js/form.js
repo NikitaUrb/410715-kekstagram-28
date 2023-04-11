@@ -79,7 +79,11 @@ const isUniqHashtags = (hashtags) => hashtags.length === new Set(hashtags).size;
 const validateHashtag = (string) => {
   const hashtags = string.trim().toLowerCase().split(' ');
 
-  return hashtags.every(isValidateHashtag) && isHashtagsLength(hashtags) && isUniqHashtags(hashtags);
+  if (hashtag.value.length > 0) {
+    return hashtags.every(isValidateHashtag) && isHashtagsLength(hashtags) && isUniqHashtags(hashtags);
+  }
+
+  return isHashtagsLength(hashtags) && isUniqHashtags(hashtags);
 };
 
 const validateCommentLength = (string) => string.length <= MAX_LENGTH_COMMENT;
