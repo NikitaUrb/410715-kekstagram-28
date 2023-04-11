@@ -4,12 +4,12 @@ import { initSlider } from './effects.js';
 import { initScalingImg } from './scale.js';
 import { getData } from './api.js';
 import { showLoadError } from './popups.js';
-import {init, getFilter} from './filter.js';
+import {initFilters} from './filter.js';
 
 getData()
   .then((data) => {
-    init(data, renderPhotos);
-    renderPhotos(getFilter());
+    initFilters(data);
+    renderPhotos(data);
   })
   .catch((err) => showLoadError(err));
 
