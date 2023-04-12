@@ -91,7 +91,7 @@ const onUpdateSlider = () => {
   }
 };
 
-const onChangeValueEffect = () => {
+const onEffectValueChange = () => {
   const value = sliderContainer.noUiSlider.get();
   sliderValue.value = value;
 
@@ -100,7 +100,7 @@ const onChangeValueEffect = () => {
     : `${chosenEffect.style}(${value}${chosenEffect.unit})`;
 };
 
-const onChangeEffect = (evt) => {
+const onEffectChange = (evt) => {
   chosenEffect = EFFECTS.find((effect) => effect.name === evt.target.value);
   uploadPreviewImg.className = `effects__preview--${chosenEffect.name}`;
   onUpdateSlider();
@@ -112,8 +112,8 @@ const resetEffects = () => {
 };
 
 const initSlider = () => {
-  effects.addEventListener('change', onChangeEffect);
-  sliderContainer.noUiSlider.on('update', onChangeValueEffect);
+  effects.addEventListener('change', onEffectChange);
+  sliderContainer.noUiSlider.on('update', onEffectValueChange);
 
   sliderContainer.noUiSlider.on('update', () => {
     sliderValue.value = sliderContainer.noUiSlider.get();
