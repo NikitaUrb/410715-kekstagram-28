@@ -99,6 +99,7 @@ const onFormSubmit = (evt) => {
     sendData(new FormData(evt.target))
       .then(() => {
         closeModal();
+        buttonSubmit.disabled = false;
         showSuccessMessage();
       })
       .catch(() => {
