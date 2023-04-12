@@ -12,9 +12,10 @@ const formOverlay = document.querySelector('.img-upload__overlay');
 const previewImage = document.querySelectorAll('.effects__preview');
 const form = document.querySelector('#upload-select-image');
 const buttonClose = document.querySelector('.img-upload__cancel');
+const buttonSubmit = document.querySelector('.img-upload__submit');
 const hashtag = document.querySelector('.text__hashtags');
 const comment = document.querySelector('.text__description');
-const img = document.querySelector('.img-upload__preview img');
+const imagePreview = document.querySelector('.img-upload__preview img');
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -31,7 +32,7 @@ const onUploadInputChange = () => {
     reader.addEventListener('load', () => {
       const url = reader.result;
 
-      img.src = url;
+      imagePreview.src = url;
 
       formOverlay.classList.remove('hidden');
       document.body.classList.add('modal-open');
@@ -91,13 +92,19 @@ const validateCommentLength = (string) => string.length <= MAX_LENGTH_COMMENT;
 const onFormSubmit = (evt) => {
   const isValid = pristine.validate();
   evt.preventDefault();
+
   if(isValid){
+    buttonSubmit.disabled = true;
+
     sendData(new FormData(evt.target))
       .then(() => {
         closeModal();
         showSuccessMessage();
       })
-      .catch(showErrorAlert);
+      .catch(() => {
+        buttonSubmit.disabled = false;
+        showErrorAlert();
+      });
   }
 };
 

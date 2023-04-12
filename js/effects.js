@@ -49,7 +49,7 @@ const EFFECTS = [
   },
 ];
 
-const DEFAULT = EFFECTS[0];
+const DEFAULT_EFFECT = EFFECTS[0];
 
 const slider = document.querySelector('.effect-level');
 const sliderValue = document.querySelector('.effect-level__value');
@@ -57,20 +57,20 @@ const sliderContainer = document.querySelector('.effect-level__slider');
 const uploadPreviewImg = document.querySelector('.img-upload__preview img');
 const effects = document.querySelector('.effects');
 
-let chosenEffect = DEFAULT;
+let chosenEffect = DEFAULT_EFFECT;
 
-const checkDefault = () => chosenEffect === DEFAULT;
+const checkDefault = () => chosenEffect === DEFAULT_EFFECT;
 
 const hideSlider = () => slider.classList.add('hidden');
 const showSlider = () => slider.classList.remove('hidden');
 
 noUiSlider.create(sliderContainer, {
   range: {
-    min: DEFAULT.min,
-    max: DEFAULT.max,
+    min: DEFAULT_EFFECT.min,
+    max: DEFAULT_EFFECT.max,
   },
-  start: DEFAULT.max,
-  step: DEFAULT.step,
+  start: DEFAULT_EFFECT.max,
+  step: DEFAULT_EFFECT.step,
   connect: 'lower'
 });
 
@@ -91,29 +91,29 @@ const onUpdateSlider = () => {
   }
 };
 
-const onChangeValueEffect = () => {
+const onEffectValueChange = () => {
   const value = sliderContainer.noUiSlider.get();
   sliderValue.value = value;
 
   uploadPreviewImg.style.filter = checkDefault()
-    ? DEFAULT.style
+    ? DEFAULT_EFFECT.style
     : `${chosenEffect.style}(${value}${chosenEffect.unit})`;
 };
 
-const onChangeEffect = (evt) => {
+const onEffectChange = (evt) => {
   chosenEffect = EFFECTS.find((effect) => effect.name === evt.target.value);
   uploadPreviewImg.className = `effects__preview--${chosenEffect.name}`;
   onUpdateSlider();
 };
 
 const resetEffects = () => {
-  chosenEffect = DEFAULT;
+  chosenEffect = DEFAULT_EFFECT;
   onUpdateSlider();
 };
 
 const initSlider = () => {
-  effects.addEventListener('change', onChangeEffect);
-  sliderContainer.noUiSlider.on('update', onChangeValueEffect);
+  effects.addEventListener('change', onEffectChange);
+  sliderContainer.noUiSlider.on('update', onEffectValueChange);
 
   sliderContainer.noUiSlider.on('update', () => {
     sliderValue.value = sliderContainer.noUiSlider.get();
