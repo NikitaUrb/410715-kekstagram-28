@@ -1,6 +1,6 @@
 const STEP = 5;
 
-const commentTemplate = document.querySelector('.social__comment');
+const socialComment = document.querySelector('.social__comment');
 const commentsList = document.querySelector('.social__comments');
 const bigPicture = document.querySelector('.big-picture');
 const countLikes = bigPicture.querySelector('.likes-count');
@@ -19,7 +19,7 @@ const preparateComments = (min, max, comments) => {
   }
 
   comments.slice(min, max).forEach((comment) => {
-    const newComment = commentTemplate.cloneNode(true);
+    const newComment = socialComment.cloneNode(true);
     const userPhoto = newComment.querySelector('img');
     const userMessage = newComment.querySelector('.social__text');
 

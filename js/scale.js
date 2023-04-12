@@ -6,11 +6,11 @@ const SCALE_DEFAULT = 100;
 const valueScale = document.querySelector('.scale__control--value');
 const buttonDecrease = document.querySelector('.scale__control--smaller');
 const buttonIncrease = document.querySelector('.scale__control--bigger');
-const img = document.querySelector('.img-upload__preview img');
+const image = document.querySelector('.img-upload__preview img');
 
 const setScale = (newValue) => {
   valueScale.value = `${newValue}%`;
-  img.style.transform = `scale(${Number.parseInt(valueScale.value, 10) / 100})`;
+  image.style.transform = `scale(${Number.parseInt(valueScale.value, 10) / 100})`;
 };
 
 const onDecreaseButtonClick = () => {
