@@ -2,13 +2,24 @@ const errorMessage = document.querySelector('#error').content.querySelector('.er
 const successMessage = document.querySelector('#success').content.querySelector('.success');
 
 let alertContainer;
+let alertMessage;
 
 const onDocumentKeydown = (evt) => {
+
   if (evt.key === 'Escape') {
     alertContainer.remove();
     document.body.removeEventListener('keydown', onDocumentKeydown);
+    document.body.removeEventListener('click', onDocumentClick);
   }
 };
+
+function onDocumentClick (evt) {
+  const withinBoundaries = evt.composedPath().includes(alertMessage);
+
+  if (!withinBoundaries) {
+    alertContainer.remove();
+  }
+}
 
 const reloadPage = (evt) => {
   if (evt.key === 'Enter') {
@@ -34,6 +45,7 @@ const showLoadError = (message) => {
 
 const showErrorAlert = () => {
   alertContainer = errorMessage.cloneNode(true);
+  alertMessage = alertContainer.querySelector('.error__inner');
   const button = alertContainer.querySelector('button');
 
   document.body.append(alertContainer);
@@ -42,12 +54,17 @@ const showErrorAlert = () => {
     alertContainer.remove();
   });
 
-  alertContainer.addEventListener('keydown', onDocumentKeydown);
+  document.body.addEventListener('click', onDocumentClick);
+
+  document.body.addEventListener('keydown', onDocumentKeydown);
 };
 
 const showSuccessMessage = () => {
   alertContainer = successMessage.cloneNode(true);
+  alertMessage = alertContainer.querySelector('.success__inner');
   const button = alertContainer.querySelector('button');
+
+  document.body.addEventListener('click', onDocumentClick);
 
   button.addEventListener('click', () => {
     alertContainer.remove();
