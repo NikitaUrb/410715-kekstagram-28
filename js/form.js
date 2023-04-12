@@ -77,15 +77,28 @@ const isHashtagsLength = (hashtags) => hashtags.length <= MAX_LENGTH_HASHTAGS;
 const isValidateHashtag = (item) => PATTERN.test(item);
 const isUniqHashtags = (hashtags) => hashtags.length === new Set(hashtags).size;
 
-const validateHashtag = (string) => {
+const validatePatternHashtag = (string) => {
   const hashtags = string.trim().toLowerCase().split(' ');
 
   if (hashtag.value.length > 0) {
-    return hashtags.every(isValidateHashtag) && isHashtagsLength(hashtags) && isUniqHashtags(hashtags);
+    return hashtags.every(isValidateHashtag) && hashtags.every(isValidateHashtag) && isUniqHashtags(hashtags);
   }
-
-  return isHashtagsLength(hashtags) && isUniqHashtags(hashtags);
+  return true;
 };
+
+const validateUniqHashtag = (string) => {
+  const hashtags = string.trim().toLowerCase().split(' ');
+
+  return isUniqHashtags(hashtags);
+};
+
+const validateLengthHashtags = (string) => {
+  const hashtags = string.trim().toLowerCase().split(' ');
+
+  return isHashtagsLength(hashtags);
+};
+
+
 
 const validateCommentLength = (string) => string.length <= MAX_LENGTH_COMMENT;
 
@@ -110,8 +123,10 @@ const onFormSubmit = (evt) => {
 };
 
 export const setupForm = () => {
-  pristine.addValidator(hashtag, validateHashtag, 'Ошибка заполнения хэштегов, хэштег должен начинаться с решетки, макс длина 20, не более 5 хэштегов');
-  pristine.addValidator(comment, validateCommentLength, 'Комментарий слишком длинный');
+  pristine.addValidator(hashtag, validatePatternHashtag, 'Ошибка заполнения хэштегов, хэштег должен начинаться с решетки и не больше 20 символов');
+  pristine.addValidator(hashtag, validateLengthHashtags, 'Ошибка заполнения хэштегов, разрешено не более 5 хэштегов'); //
+  pristine.addValidator(hashtag, validateUniqHashtag, 'Ошибка заполнения хэштегов, хэштеги не должны повторяться'); //
+  pristine.addValidator(comment, validateCommentLength, 'Комментарий слишком длинный'); //
 
   uploadInput.addEventListener('change', onUploadInputChange);
   form.addEventListener('submit', onFormSubmit);
