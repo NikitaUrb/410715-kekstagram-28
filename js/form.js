@@ -14,7 +14,7 @@ const form = document.querySelector('#upload-select-image');
 const buttonClose = document.querySelector('.img-upload__cancel');
 const hashtag = document.querySelector('.text__hashtags');
 const comment = document.querySelector('.text__description');
-const img = document.querySelector('.img-upload__preview img');
+const imagePreview = document.querySelector('.img-upload__preview img');
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -31,7 +31,7 @@ const onUploadInputChange = () => {
     reader.addEventListener('load', () => {
       const url = reader.result;
 
-      img.src = url;
+      imagePreview.src = url;
 
       formOverlay.classList.remove('hidden');
       document.body.classList.add('modal-open');

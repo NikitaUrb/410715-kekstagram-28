@@ -12,6 +12,11 @@ const commentCount = document.querySelector('.social__comment-count');
 let onLoaderButtonClick;
 
 const preparateComments = (min, max, comments) => {
+  if(max >= comments.length) {
+    loaderButton.classList.add('hidden');
+  } else {
+    loaderButton.classList.remove('hidden');
+  }
 
   comments.slice(min, max).forEach((comment) => {
     const newComment = commentTemplate.cloneNode(true);
