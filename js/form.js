@@ -98,8 +98,6 @@ const validateLengthHashtags = (string) => {
   return isHashtagsLength(hashtags);
 };
 
-
-
 const validateCommentLength = (string) => string.length <= MAX_LENGTH_COMMENT;
 
 const onFormSubmit = (evt) => {
