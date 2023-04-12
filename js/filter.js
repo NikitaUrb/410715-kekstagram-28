@@ -36,7 +36,7 @@ const filterPictures = (currentFilter, pictures) => {
 
 const onFilterFormClick = (evt, pictures) => {
 
-  if (!evt.target.classList.contains('img-filters__button' || evt.target.classList.contains('img-filters__button--active'))) {
+  if (!evt.target.classList.contains('img-filters__button') || evt.target.classList.contains('img-filters__button--active')) {
     return;
   }
 
